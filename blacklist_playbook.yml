@@ -1,19 +1,7 @@
----
-- name: Executar script local de blacklist
+- name: Executar script no host Debian
   hosts: localhost
-  connection: local
-  gather_facts: no
-
-  vars:
-    numero: "{{ numero }}"
-    descricao: "{{ descricao }}"
+  gather_facts: false
 
   tasks:
     - name: Executar script Python para adicionar à blacklist
-      ansible.builtin.command: >
-        /opt/scripts/add_to_blacklist.py "{{ numero }}" "{{ descricao }}"
-      register: resultado
-
-    - name: Exibir saída do script
-      ansible.builtin.debug:
-        var: resultado.stdout
+      command: /opt/scripts/add_to_blacklist.py "{{ numero }}" "{{ descricao }}"

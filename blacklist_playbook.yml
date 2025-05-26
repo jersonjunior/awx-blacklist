@@ -1,7 +1,0 @@
-- name: Executar script no host Debian
-  hosts: localhost
-  gather_facts: false
-
-  tasks:
-    - name: Executar script Python para adicionar à blacklist
-      command: /opt/scripts/add_to_blacklist.py "{{ numero }}" "{{ descricao }}"

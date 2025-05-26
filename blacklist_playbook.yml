@@ -1,11 +1,19 @@
-# blacklist_playbook.yml
+---
 - name: Executar script local de blacklist
-  hosts: all
+  hosts: localhost
+  connection: local
   gather_facts: no
-  become: yes
+
+  vars:
+    numero: "{{ numero }}"
+    descricao: "{{ descricao }}"
+
   tasks:
-    - name: Executar script Python passando número e descrição
-      ansible.builtin.shell: |
-        /opt/scripts/add_to_blacklist.py '{{ numero }}' '{{ descricao }}'
-      args:
-        executable: /bin/bash
+    - name: Executar script Python para adicionar à blacklist
+      ansible.builtin.command: >
+        /opt/scripts/add_to_blacklist.py "{{ numero }}" "{{ descricao }}"
+      register: resultado
+
+    - name: Exibir saída do script
+      ansible.builtin.debug:
+        var: resultado.stdout
